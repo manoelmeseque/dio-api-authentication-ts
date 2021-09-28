@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { StatusCodes } from 'http-status-codes';
+import userRespository from '../repositories/user.respository';
 
 const usersRouter = Router();
 
@@ -10,10 +11,8 @@ const usersRouter = Router();
 // delete /users/:uuid
 
 
-usersRouter.get("/users", (req: Request, res: Response, next: NextFunction) => {
-    const users = [
-        { userName: "Manoel" }
-    ]
+usersRouter.get("/users", async (req: Request, res: Response, next: NextFunction) => {
+    const users = await userRespository.findAllUsers();
     res.status(StatusCodes.OK).send(users);
 });
 
