@@ -1,7 +1,8 @@
 import express from 'express';
 import errorHandler from './middlewares/error-handler.middleware';
+import authorizationRoute from './routes/authorization.route';
 import statusRoute from './routes/status.route';
-import usersRouter from './routes/users.route';
+import usersRoute from './routes/users.route';
 const app = express();
 
 // configurações da aplicação
@@ -9,8 +10,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // configurações de rotas
-app.use(usersRouter);
+app.use(usersRoute);
 app.use(statusRoute);
+app.use(authorizationRoute);
 
 
 // configuração dos handlers de error

@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import DatabaseError from '../models/errors/database.error.model';
 import userRespository from '../repositories/user.respository';
 
-const usersRouter = Router();
+const usersRoute = Router();
 
 // get /users
 // get /users/:uuid
@@ -12,19 +12,19 @@ const usersRouter = Router();
 // delete /users/:uuid
 
 
-usersRouter.get("/users", async (req: Request, res: Response, next: NextFunction) => {
+usersRoute.get("/users", async (req: Request, res: Response, next: NextFunction) => {
     const users = await userRespository.findAllUsers();
     res.status(StatusCodes.OK).send(users);
 });
 
-usersRouter.get("/users/:uuid", async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
+usersRoute.get("/users/:uuid", async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
     const uuid = req.params.uuid;
 
     const user = await userRespository.findById(uuid);
     res.status(StatusCodes.OK).send(user);
 });
 
-usersRouter.post("/users", async (req: Request, res: Response, next: NextFunction) => {
+usersRoute.post("/users", async (req: Request, res: Response, next: NextFunction) => {
     const newUser = req.body;
 
     const uuid = await userRespository.create(newUser);
@@ -32,7 +32,7 @@ usersRouter.post("/users", async (req: Request, res: Response, next: NextFunctio
     res.status(StatusCodes.CREATED).send(uuid);
 });
 
-usersRouter.put("/users/:uuid", async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
+usersRoute.put("/users/:uuid", async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
     const uuid = req.params.uuid;
     const modifiedUser = req.body;
 
@@ -42,7 +42,7 @@ usersRouter.put("/users/:uuid", async (req: Request<{ uuid: string }>, res: Resp
     res.status(StatusCodes.OK).send();
 });
 
-usersRouter.delete("/users/:uuid", async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
+usersRoute.delete("/users/:uuid", async (req: Request<{ uuid: string }>, res: Response, next: NextFunction) => {
     try{
         const uuid = req.params.uuid;
         await userRespository.remove(uuid);
@@ -54,4 +54,4 @@ usersRouter.delete("/users/:uuid", async (req: Request<{ uuid: string }>, res: R
     
 });
 
-export default usersRouter;
+export default usersRoute;
